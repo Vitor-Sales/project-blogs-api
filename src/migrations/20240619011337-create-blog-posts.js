@@ -34,8 +34,16 @@ module.exports = {
           model: 'users',
           key: 'id',
         }
-      }
-    })
+      },
+      published: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updated: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+    });
   },
 
   async down (queryInterface, Sequelize) {

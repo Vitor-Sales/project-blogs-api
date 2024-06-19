@@ -22,13 +22,13 @@ module.exports = {
           key: 'id',
         },
       },
-      categoriesId: {
+      categoryId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        field: 'categories_id',
+        field: 'category_id',
         references: {
           model: 'categories',
           key: 'id',
