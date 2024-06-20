@@ -5,6 +5,16 @@ const secret = process.env.JWT_SECRET;
 
 const isBodyValid = (email, password) => email && password;
 
+const withoutPassword = (data) => {
+  const dataWithoutPassword = {
+    id: data.dataValues.id,
+    displayName: data.dataValues.displayName,
+    email: data.dataValues.email,
+    image: data.dataValues.image,
+  };
+  return dataWithoutPassword;
+};
+
 module.exports = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -19,9 +29,11 @@ module.exports = async (req, res) => {
       return res.status(400).json({ message: 'Invalid fields' });
     }
 
+    const userWithoutPassword = withoutPassword(user);
+
     // const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
 
-    const token = jwt.sign(user.dataValues, secret);
+    const token = jwt.sign(userWithoutPassword, secret);
 
     res.status(200).json({ token });
   } catch (e) {

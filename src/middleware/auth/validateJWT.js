@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
     const decoded = jwt.verify(token, secret);
 
     // id ou userId
-    const user = await UserService.getByUserId(decoded.data.userId);
+    const user = await UserService.getByUserId(decoded.data.id);
 
     if (!user) {
       return res.status(401).json({ message: 'invalid token 1' });

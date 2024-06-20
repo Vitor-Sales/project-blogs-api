@@ -1,6 +1,7 @@
 const express = require('express');
-//  const validatJWT = require('./middleware/auth/validateJWT');
-const { login } = require('./controllers');
+// const validateJWT = require('./middleware/auth/validateJWT');
+const { login, UserController } = require('./controllers');
+const validateUser = require('./middleware/validateUser');
 // ...
 
 const app = express();
@@ -15,6 +16,8 @@ app.use(express.json());
 // ...
 
 app.post('/login', login);
+
+app.post('/user', validateUser, UserController.create);
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`

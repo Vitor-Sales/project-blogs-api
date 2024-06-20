@@ -11,7 +11,22 @@ const getByUserId = async (userId) => {
   return user;
 };
 
+const create = async (newUserData) => {
+  const { email } = newUserData;
+
+  const checkEmailInDB = await getByEmail(email);
+
+  if (checkEmailInDB) {
+    return null;
+  }
+
+  const newUser = await User.create(newUserData);
+
+  return newUser;
+};
+
 module.exports = {
   getByEmail,
   getByUserId,
+  create,
 };
