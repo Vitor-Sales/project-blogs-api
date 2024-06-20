@@ -11,6 +11,12 @@ const getByUserId = async (userId) => {
   return user;
 };
 
+const getAll = async () => {
+  const allUsers = await User.findAll();
+
+  return allUsers;
+};
+
 const create = async (newUserData) => {
   const { email } = newUserData;
 
@@ -29,4 +35,5 @@ module.exports = {
   getByEmail,
   getByUserId,
   create,
+  getAll,
 };
