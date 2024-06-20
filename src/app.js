@@ -18,7 +18,8 @@ app.use(express.json());
 app.post('/login', login);
 
 app.post('/user', validateUser, UserController.create);
-app.get('/user', validateJWT, validateUser, UserController.getAll);
+app.get('/user', validateJWT, UserController.getAll);
+// app.get('/user/:id', validateJWT, UserController.getById);
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`

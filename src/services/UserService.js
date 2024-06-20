@@ -12,7 +12,9 @@ const getByUserId = async (userId) => {
 };
 
 const getAll = async () => {
-  const allUsers = await User.findAll();
+  const allUsers = await User.findAll({
+    attributes: { exclude: ['password'] },
+  });
 
   return allUsers;
 };
