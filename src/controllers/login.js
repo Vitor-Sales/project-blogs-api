@@ -12,15 +12,16 @@ module.exports = async (req, res) => {
     if (!isBodyValid(email, password)) {
       return res.status(400).json({ message: 'Some required fields are missing' });
     }
-    const user = UserService.getByEmail(email);
+    const user = await UserService.getByEmail(email);
+    console.log(user);
 
     if (!user || user.password !== password) {
       return res.status(400).json({ message: 'Invalid fields' });
     }
 
-    const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
+    // const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
 
-    const token = jwt.sign({ data: { userId: user.id }, secret, jwtConfig });
+    const token = jwt.sign(user.dataValues, secret);
 
     res.status(200).json({ token });
   } catch (e) {
