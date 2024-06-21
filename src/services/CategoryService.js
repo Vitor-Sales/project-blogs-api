@@ -6,6 +6,17 @@ const create = async (categoryNameData) => {
   return newCategory;
 };
 
+const getAll = async () => {
+  const allCategories = await Category
+    .findAll({
+      order: [
+        ['name', 'DESC'],
+      ], 
+    });
+  return allCategories;
+};
+
 module.exports = {
   create,
+  getAll,
 };
