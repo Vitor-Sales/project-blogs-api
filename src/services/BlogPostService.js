@@ -44,17 +44,17 @@ const getById = async (postId) => {
       { model: User, as: 'user', attributes: { exclude: ['password'] } }, 
     ],
   });
-
   return post;
 };
-
 const update = async (id, postData, tokenId) => {
-  const post = await BlogPost.findByPk(id);
+  const post = await getById(id);
+  console.log('tokenId', tokenId);
+  console.log('userId', post.userId);
   if (post.userId !== tokenId) {
     return false;
   }
-  const updatedPost = await BlogPost.update(postData, { where: { id } });
+  await BlogPost.update(postData, { where: { id } });
+  const updatedPost = await getById(id);
   return updatedPost;
 };
-
 module.exports = { create, getAll, getById, update };

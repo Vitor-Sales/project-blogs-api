@@ -26,7 +26,7 @@ module.exports = async (req, res, next) => {
     //  }
 
     req.user = decoded;
-    console.log(`req.user: ${decoded}`);
+    console.log(`req.user: ${req.user.id}`);
     next();
   } catch (e) {
     console.log(e.message);
