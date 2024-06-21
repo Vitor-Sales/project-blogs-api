@@ -1,5 +1,3 @@
-const { BlogPost } = require('../models');
-
 const UserModel = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -22,8 +20,8 @@ const UserModel = (sequelize, DataTypes) => {
     });
 
     User.associate = (models) => {
-        models.User.hasMany(models.BlogPost,
-            { foreignKey: 'userId', as: 'blogPosts' });
+        User.hasMany(models.BlogPost,
+        { foreignKey: 'userId', as: 'blogPosts' });
     };
 
     return User;
