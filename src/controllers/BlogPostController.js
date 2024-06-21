@@ -11,7 +11,7 @@ const create = async (req, res) => {
   return res.status(201).json(newPost);
 };
 
-const getAll = async (req, res) => {
+const getAll = async (_req, res) => {
   const allPosts = await BlogPostService.getAll();
 
   return res.status(200).json(allPosts);
@@ -28,8 +28,23 @@ const getById = async (req, res) => {
   return res.status(200).json(post);
 };
 
+const update = async (req, res) => {
+  const { id } = req.params;
+  const postData = req.body;
+  const { user } = req;
+
+  const updatedPost = await BlogPostService(id, postData, user.id);
+
+  if (updatedPost === false) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+
+  return res.status(200).json(updatedPost);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
