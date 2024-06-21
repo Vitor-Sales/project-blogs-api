@@ -39,7 +39,10 @@ const getAll = async () => {
 
 const getById = async (postId) => {
   const post = await BlogPost.findByPk(postId, {
-    include: [{ model: Category, as: 'categories', through: { attributes: [] } }],
+    include: [
+      { model: Category, as: 'categories', through: { attributes: [] } },
+      { model: User, as: 'user', attributes: { exclude: ['password'] } }, 
+    ],
   });
 
   return post;
@@ -47,13 +50,10 @@ const getById = async (postId) => {
 
 const update = async (id, postData, tokenId) => {
   const post = await BlogPost.findByPk(id);
-
   if (post.userId !== tokenId) {
     return false;
   }
-
   const updatedPost = await BlogPost.update(postData, { where: { id } });
-
   return updatedPost;
 };
 
