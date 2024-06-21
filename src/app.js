@@ -32,7 +32,7 @@ app.post('/categories', validateJWT, validateCategory, CategoryController.create
 app.get('/categories', validateJWT, CategoryController.getAll);
 
 app.post('/post', validatePost, validateJWT, BlogPostController.create);
-// app.get('/post', validateJWT, BlogPostController.getAll);
+app.get('/post', validateJWT, BlogPostController.getAll);
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`

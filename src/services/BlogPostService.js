@@ -2,9 +2,7 @@ const { BlogPost, Category, PostCategory } = require('../models');
 
 const categoriesExists = async (categoriesIds) => {
   const allCategoriesExists = await Promise.all(categoriesIds
-    .map((category) => Category.findByPk(category)));
-  // console.log('allCategoriesExists', allCategoriesExists);  
-  // console.log('includes', allCategoriesExists.includes(undefined));  
+    .map((category) => Category.findByPk(category))); 
 
   return allCategoriesExists.includes(null);
 };
@@ -16,7 +14,7 @@ const createPostCategory = async (postId, categoryIds) => {
 const create = async (userId, title, content, categoryIds) => {
   const newPost = await BlogPost.create({ userId, title, content, categoryIds });
   const allCategoriesExists = await categoriesExists(categoryIds);
-  // console.log('allCategoriesExists222', allCategoriesExists);
+
   if (allCategoriesExists) {
     return { 
       status: 'NOT_FOUND', 
@@ -24,12 +22,19 @@ const create = async (userId, title, content, categoryIds) => {
     };
   }
   await createPostCategory(newPost.id, categoryIds);
-  // console.log('categoryIds: ', categoryIds);
-  // console.log('newPost: ', newPost);
 
   return newPost;
 };
 
+const getAll = async () => {
+  const allPosts = await BlogPost.findAll({
+    include: [{ model: Category, as: 'categories', through: { attributes: [] } }],
+  });
+
+  return allPosts;
+};
+
 module.exports = {
   create,
+  getAll,
 };
