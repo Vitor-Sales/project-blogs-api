@@ -2,6 +2,7 @@ const PostCategoryModel = (sequelize, DataTypes) => {
     const PostCategory = sequelize.define('PostCategory', {
         postId: {
             type: DataTypes.INTEGER,
+            primaryKey: true,
             allowNull: false,
             field: 'post_id',
             onUpdatae: 'CASCADE',
@@ -13,6 +14,7 @@ const PostCategoryModel = (sequelize, DataTypes) => {
         },
         categoryId: {
             type: DataTypes.INTEGER,
+            primaryKey: true,
             allowNull: false,
             field: 'category_id',
             onUpdatae: 'CASCADE',
