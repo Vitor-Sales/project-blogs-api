@@ -34,7 +34,7 @@ const update = async (req, res) => {
   const { user } = req;
 
   const updatedPost = await BlogPostService.update(id, postData, user.id);
-
+  
   if (updatedPost === false) {
     return res.status(401).json({ message: 'Unauthorized user' });
   }
@@ -42,9 +42,17 @@ const update = async (req, res) => {
   return res.status(200).json(updatedPost);
 };
 
-module.exports = {
-  create,
-  getAll,
-  getById,
-  update,
+const destroy = async (req, res) => {
+  const { id } = req.params;
+  const { user } = req;
+  const deletedPost = await BlogPostService.destroy(id, user.id);
+  if (deletedPost.status === 'UNAUTHORIZED') {
+    return res.status(401).json(deletedPost.data);
+  }
+  if (deletedPost.status === 'NOT_FOUND') {
+    return res.status(404).json(deletedPost.data);
+  }
+  return res.status(204).json();
 };
+
+module.exports = { create, getAll, getById, update, destroy };
